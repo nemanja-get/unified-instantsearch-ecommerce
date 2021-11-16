@@ -1,5 +1,5 @@
 .ais-Panel-headerButton {
-  align-items: center;
+  align-items: flex-start;
   background: none;
   border: 0;
   color: #21243d;
@@ -16,6 +16,15 @@
   width: 100%;
   @media (--algolia-theme-breakpoint-md-max) {
     padding: 1.2rem 0;
+  }
+
+  h5 {
+    font-size: 18px;
+    line-height: 1.1;
+    color: rgb(45, 41, 38);
+    text-align: left;
+    margin: 0px 0px 24px;
+    text-transform: initial;
   }
 }
 

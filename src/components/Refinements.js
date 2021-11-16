@@ -10,8 +10,9 @@ import { Panel } from './Panel';
 import { ColorList } from './ColorList';
 import { Slider } from './Slider';
 import { SizeList } from './SizeList';
+import { ImageList } from './ImageList';
 
-function RefinementWidget({ type, ...props }) {
+function RefinementWidget({ type, label, ...props  }) {
   switch (type) {
     case 'color':
       return <ColorList {...props} />;
@@ -23,22 +24,32 @@ function RefinementWidget({ type, ...props }) {
       return <Slider {...props} />;
 
     case 'list':
-      return (
-        <RefinementList
+      if(label === 'Brand'){
+        return (
+          <RefinementList
           translations={{
             showMore: (expanded) =>
-              expanded ? '- View fewer filters' : '+ View more filters',
+              expanded ? 'Prikaži manje' : 'Prikaži više',
           }}
           {...props}
-        />
-      );
-
+          />
+        );
+      }
+      else if(label === 'ImageBrand'){
+        <ImageList
+        translations={{
+          showMore: (expanded) =>
+            expanded ? 'Prikaži manje' : 'Prikaži više',
+        }}
+        {...props}
+      />
+      }
     case 'category':
       return (
         <Menu
           translations={{
             showMore: (expanded) =>
-              expanded ? '- View fewer categories' : '+ View more categories',
+              expanded ? 'Prikaži manje' : 'Prikaži više',
           }}
           {...props}
         />
@@ -49,7 +60,7 @@ function RefinementWidget({ type, ...props }) {
         <HierarchicalMenu
           translations={{
             showMore: (expanded) =>
-              expanded ? '- View fewer categories' : '+ View more categories',
+              expanded ? 'Prikaži manje' : 'Prikaži više',
           }}
           {...props}
         />
@@ -97,7 +108,6 @@ export function Refinements() {
 
   return config.refinements.map((refinement) => {
     const panelId = getPanelId(refinement);
-
     return (
       <Panel
         key={panelId}
@@ -105,7 +115,7 @@ export function Refinements() {
         isOpened={panels[panelId]}
         onToggle={() => onToggle(panelId)}
       >
-        <RefinementWidget type={refinement.type} {...refinement.options} />
+        <RefinementWidget type={refinement.type} {...refinement.options} label={refinement.label} />
       </Panel>
     );
   });

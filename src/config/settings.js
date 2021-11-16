@@ -16,6 +16,7 @@
 import React from 'preact/compat';
 import { Hit } from './Hit';
 
+
 /*
 |-------------------------------------------------------------------------------
 | Base configuration                           http://alg.li/unified/base-config
@@ -29,14 +30,16 @@ import { Hit } from './Hit';
 |
 */
 
-export const inputContainer = '#search-button';
+export const inputContainer = '#search-container';
 export const inputContent = 'Search for products';
 export const keyboardShortcuts = ['/'];
-export const appId = 'latency';
-export const searchApiKey = '6be0576ff61c053d5f9a3225e2a90f76';
+export const appId = 'Y1BSBVJ7AC';
+export const searchApiKey = '82d109db398a4e02d0fa084964382af6';
 export const hitComponent = Hit;
+
+
 export const index = {
-  indexName: 'instant_search',
+  indexName: 'dev_ananas',
   searchParameters: {
     analytics: true,
     clickAnalytics: true,
@@ -79,12 +82,12 @@ export const setUserToken = (setToken) => {
 export const sorts = [
   {
     label: 'Price ascending',
-    value: 'instant_search_price_asc',
+    value: 'dev_ananas_price_asc',
   },
   {
     label: 'Price descending',
-    value: 'instant_search_price_desc',
-  },
+    value: 'dev_ananas_price_desc',
+  }
 ];
 
 /*
@@ -107,10 +110,7 @@ export const refinements = [
     header: 'Categories',
     label: 'Category',
     options: {
-      attributes: [
-        'hierarchicalCategories.lvl0',
-        'hierarchicalCategories.lvl1',
-      ],
+      attributes: ['categories'],
       limit: 6,
       showMore: true,
     },
@@ -127,7 +127,7 @@ export const refinements = [
       showMoreLimit: 20,
       translations: {
         showMore: (expanded) =>
-          expanded ? '- View fewer brands' : '+ View more brands',
+          expanded ? 'Prikaži manje' : 'Prikaži više',
       },
     },
   },
@@ -164,7 +164,7 @@ export const refinements = [
 */
 
 export const suggestionsIndex = {
-  indexName: 'instant_search_demo_query_suggestions',
+  indexName: 'dev_ananas',
   searchParameters: {
     hitsPerPage: 6,
   },
@@ -184,12 +184,12 @@ export const suggestionsIndex = {
 
 export const styles = {
   colors: {
-    primary: '#d02139',
-    secondary: '#21243d',
+    primary: '#2d2926',
+    secondary: '#757575',
   },
   text: {
-    fontFamily: `-apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen,
-ubuntu, cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
+  fontFamily: `"Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, 
+  "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
   },
   breakpoints: {
     sm: 640,

@@ -3,7 +3,7 @@ import { Index, connectHits, Configure } from 'react-instantsearch-dom';
 
 import { QUERY_SUGGESTIONS_INDEX_NAME } from '../../constants';
 import { ReverseHighlight } from '../ReverseHighlight';
-import { SearchBox } from './SearchBox';
+import { SearchBox } from 'react-instantsearch-dom';
 
 export const PredictiveSearchBox = (props) => {
   const [suggestion, setSuggestion] = React.useState(null);
@@ -19,10 +19,15 @@ export const PredictiveSearchBox = (props) => {
             ? suggestion
             : null
         }
-        onChange={(event) => {
-          setSuggestion(null);
-          props.refine(event.currentTarget.value);
-        }}
+        //  onChange={(event) => {
+				// 	// if(!event.currentTarget.value){
+				// 	// 	setSuggestion(null);
+				// 	// 	props.refine('');
+				// 	// }
+        //    console.log(!event.currentTarget.value)
+        //    setSuggestion(null);
+        //    props.refine(event.currentTarget.value);
+        // }}
         onKeyDown={(event) => {
           // When the user hits the right arrow and is at the end of the
           // input query, we validate the completion.
@@ -36,12 +41,17 @@ export const PredictiveSearchBox = (props) => {
           } else if (event.keyCode === 27) {
             event.preventDefault();
             props.refine('');
+          } else if (event.keyCode === 13) {
+            event.preventDefault();
+            setSuggestion(null);
+            props.refine(event.currentTarget.value);
           }
         }}
         onSubmit={() => {}}
         onReset={() => {
           props.refine('');
         }}
+				searchAsYouType={props.searchAutoComplete}
       />
 
       <Index indexName={QUERY_SUGGESTIONS_INDEX_NAME}>

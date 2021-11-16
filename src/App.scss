@@ -69,13 +69,14 @@
 /* Header */
 
 .uni-Header {
-  background: var(--algolia-theme-color-primary);
-  background-image: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 54%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
-  color: #fff;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  // background-image: linear-gradient(
+  //   180deg,
+  //   rgba(0, 0, 0, 0) 54%,
+  //   rgba(0, 0, 0, 0.1) 100%
+  // );
   position: sticky;
   top: 0;
   z-index: 2;
@@ -87,11 +88,13 @@
     transform: translateY(-50%);
   }
   .ais-SearchBox-submit {
-    padding: 4px 1rem 0 1.5rem;
+    //padding: 4px 1rem 0 1.5rem;
     width: 48px;
   }
   .ais-SearchBox {
     width: 100%;
+    background-color: #fff;
+    border-radius: 4px;
   }
   .ais-SearchBox-inputContainer {
     background: #ebecf3;
@@ -108,11 +111,11 @@
   }
   .ais-SearchBox-input,
   .ais-SearchBox-completion {
-    background: none;
-    border-bottom: 1px solid transparent;
+    background: #f6f8f9;
+    border: 2px solid rgb(224, 224, 224);
     height: 100%;
     padding: 0 48px;
-    position: absolute;
+    // position: absolute;
     width: 100%;
   }
   .ais-SearchBox-input {
@@ -123,11 +126,14 @@
       /* Firefox */
       opacity: 1;
     }
+
+    &:focus {
+      border-color:rgb(254, 80, 0);
+    }
   }
 }
 
 .uni-Header-inner {
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,7 +165,7 @@
 
 .uni-QuerySuggestions {
   align-items: flex-start;
-  color: #fff;
+  // color: #fff;
   display: flex;
   justify-content: flex-start;
   padding-top: 1.5rem;
@@ -184,7 +190,7 @@
 }
 
 .uni-QuerySuggestions-label {
-  color: rgba(255, 255, 255, 0.8);
+  // color: rgba(255, 255, 255, 0.8);
   font-size: 0.875rem;
   font-weight: bold;
   margin: 0.25rem 0;
@@ -213,7 +219,7 @@
   background: rgba(255, 255, 255, 0.3);
   border: 0;
   border-radius: 9999px;
-  color: inherit;
+  // color: inherit;
   cursor: pointer;
   letter-spacing: 0.03rem;
   padding: 0.25rem 0.75rem;
@@ -223,6 +229,14 @@
 /* Refinements */
 
 .uni-Refinements {
+  background: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 24px;
+    margin-bottom: 16px;
+    line-height: 16px;
   @media (--algolia-theme-breakpoint-md-max) {
     background: #fff;
     box-shadow: -30px 0 50px 0 rgba(0, 0, 0, 0.4);
@@ -308,7 +322,7 @@
 .uni-Content {
   display: flex;
   margin: 0 auto;
-  max-width: 1300px;
+  max-width: 1680px;
   overflow-x: hidden;
   padding: 2rem 1rem;
   @media (--algolia-theme-breakpoint-md-max) {
@@ -365,8 +379,8 @@
 }
 
 .uni-BodyHeader {
-  border-bottom: 1px solid #ebecf3;
-  padding-bottom: 1.5rem;
+  // border-bottom: 1px solid #ebecf3;
+  padding-bottom: 1rem;
 }
 
 .uni-BodyHeader-heading {
@@ -451,7 +465,7 @@
 
 .uni-BodyContent {
   display: block;
-  padding-top: 1.5rem;
+  padding-top: .5rem;
 }
 
 /* Panel */
@@ -467,6 +481,8 @@
 /* Stats */
 
 .uni-BodyHeader-stats {
+  display: flex;
+  align-items: center;
   padding: 0.4rem 0;
 }
 
@@ -479,8 +495,9 @@
 }
 
 .ais-Stats-mainText {
-  color: var(--algolia-theme-color-primary);
+  padding-left: 16px;
   font: inherit;
+  color:#21243d;
 }
 
 /* ToggleRefinement */
@@ -592,7 +609,7 @@
 /* Container & Overlay */
 
 .uni-Container {
-  background: #fff;
+  background: rgb(246, 248, 249);
   border-radius: 2px;
   bottom: 0;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.62),
@@ -600,7 +617,7 @@
   font-family: var(--algolia-theme-text-fontFamily);
   -webkit-font-smoothing: antialiased;
   left: 0;
-  margin: 2rem;
+  // margin: 2rem;
   overflow-x: hidden;
   overflow-y: scroll;
   position: fixed;
@@ -720,4 +737,66 @@
   @media (--algolia-theme-breakpoint-above-md) {
     display: none;
   }
+}
+
+.brand-info-wrapper {
+  position: relative;
+}
+
+.brand-info-text {
+  display: none;
+  position: absolute;
+  transition: 0.2s ease-in-out;
+  position: absolute;
+  width: 200px;
+  border: 1px solid rgb(212, 210, 210);;
+  background: rgb(240, 239, 239);
+  top: -20px;
+}
+
+.brand-info-wrapper:hover .brand-info-text {
+  display: block;
+}
+
+.ais-Highlight-nonHighlighted {
+  color: rgb(45, 41, 38);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.configuration-footer {
+  display: flex;
+  align-items:center;
+  width: 100%;
+  background-color: #fff;
+  padding: 1rem;
+
+  button {
+    background: #f6f8f9;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: 1px solid #ebecf3;
+    border-radius: 4px;
+    cursor: pointer;
+  
+    &:hover {
+      border-color: rgb(254, 80, 0);
+    }
+  }
+}
+
+.uni-Hit-free-shipping { 
+  margin-bottom: 0.5rem;
+  min-height: 20px;
+  p {
+    display: flex;
+    align-items: center;
+  }
+  span {
+    padding-left: 0.5rem;
+  }
+}
+
+.uni-Hit-footer {
+  height: 50px;
 }

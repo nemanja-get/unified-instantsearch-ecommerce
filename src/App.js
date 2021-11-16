@@ -187,11 +187,7 @@ export function App({ config }) {
         isMobile,
         topAnchor,
       }}
-    >
-      <SearchButton onClick={() => setIsOverlayShowing(true)} />
-
-      {isOverlayShowing &&
-        createPortal(
+    >     
           <>
             <div
               style={{ zIndex: config.styles.baseZIndex }}
@@ -223,9 +219,7 @@ export function App({ config }) {
                 />
               </SearchContext.Provider>
             </div>
-          </>,
-          document.body
-        )}
+          </>
     </AppContext.Provider>
   );
 }

@@ -140,7 +140,7 @@ a[class^='ais-'] {
   border-radius: 3px;
   color: rgba(33, 36, 61, 0.8);
   font-family: inherit;
-  min-height: 54px;
+  min-height: 44px;
   outline: none;
   padding-left: 56px;
   width: 100%;
@@ -288,7 +288,7 @@ a[class^='ais-'] {
 .ais-RefinementList-showMore {
   background: none;
   border: 0;
-  color: var(--algolia-theme-color-secondary);
+  color: rgb(7, 42, 200);
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: 500;
@@ -296,7 +296,7 @@ a[class^='ais-'] {
   line-height: 2rem;
   margin: 0;
   padding: 0;
-  text-transform: uppercase;
+  // text-transform: uppercase;
 }
 
 .ais-HierarchicalMenu-showMore--disabled,
@@ -489,7 +489,8 @@ a[class^='ais-'] {
 /* Pagination */
 
 .ais-Pagination {
-  padding-top: 2rem;
+  padding: 0.5rem;
+  background-color: #fff;
 }
 
 .ais-Pagination--noRefinement {
@@ -510,11 +511,18 @@ a[class^='ais-'] {
 }
 
 .ais-Pagination-item {
-  background-color: rgba(65, 66, 71, 0.08);
-  border-radius: 3px;
-  color: #414247;
+  // background-color: rgba(65, 66, 71, 0.08);
+  // border-radius: 3px;
+  // color: #414247;
   height: 38px;
   width: 38px;
+
+  &:hover {
+    .ais-Pagination-link { 
+      color:rgb(254, 80, 0); 
+    }
+  }
+
   &.ais-Pagination-item--page {
     margin-right: 4px;
   }
@@ -527,12 +535,12 @@ a[class^='ais-'] {
 }
 
 .ais-Pagination-item--selected {
-  background-color: var(--algolia-theme-color-primary);
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.34),
-    rgba(255, 255, 255, 0)
-  );
+  // background-color: var(--algolia-theme-color-primary);
+  // background-image: linear-gradient(
+  //   to bottom,
+  //   rgba(255, 255, 255, 0.34),
+  //   rgba(255, 255, 255, 0)
+  // );
   font-weight: bold;
 }
 
@@ -548,7 +556,7 @@ a[class^='ais-'] {
 }
 
 .ais-Pagination-item--selected a {
-  color: #fff;
+  color: rgb(254, 80, 0);
 }
 
 .ais-Pagination-link {

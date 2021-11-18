@@ -12,5 +12,5 @@ export const ProductList = (props) => {
     return <InfiniteHits {...props} />;
   }
 
-  return <Hits {...props} />;
+  return <Hits {...props} setHit={props.setHit} />;
 };

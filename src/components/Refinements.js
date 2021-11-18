@@ -11,6 +11,8 @@ import { ColorList } from './ColorList';
 import { Slider } from './Slider';
 import { SizeList } from './SizeList';
 import { ImageList } from './ImageList';
+import { CustomRangeInput } from './RangeInput';
+import { CustomNumericMenu } from './NumericMenu';
 
 function RefinementWidget({ type, label, ...props  }) {
   switch (type) {
@@ -21,7 +23,15 @@ function RefinementWidget({ type, label, ...props  }) {
       return <SizeList {...props} />;
 
     case 'slider':
-      return <Slider {...props} />;
+      if (props.priceFilterType === 'slider'){
+        return <Slider {...props} />
+      }
+      else if (props.priceFilterType === 'range') {
+        return <CustomRangeInput {...props} />;
+      }
+      else if (props.priceFilterType === 'numericMenu'){
+        return <CustomNumericMenu {...props} />
+      }     
 
     case 'list':
       if(label === 'Brand'){
@@ -44,6 +54,7 @@ function RefinementWidget({ type, label, ...props  }) {
         {...props}
       />
       }
+
     case 'category':
       return (
         <Menu
@@ -77,11 +88,10 @@ function getPanelId(refinement) {
     : refinement.options.attribute;
 }
 
-export function Refinements() {
+export function Refinements(props) {
   const { config, isMobile } = useAppContext();
   const [panels, setPanels] = React.useState(
-    config.refinements.reduce(
-      (acc, current) => ({
+    config.refinements.reduce((acc, current) => ({
         ...acc,
         [getPanelId(current)]: isMobile ? false : !current.isCollapsed,
       }),
@@ -115,7 +125,7 @@ export function Refinements() {
         isOpened={panels[panelId]}
         onToggle={() => onToggle(panelId)}
       >
-        <RefinementWidget type={refinement.type} {...refinement.options} label={refinement.label} />
+        <RefinementWidget type={refinement.type} {...refinement.options} label={refinement.label} priceFilterType={props.priceFilterType} />
       </Panel>
     );
   });

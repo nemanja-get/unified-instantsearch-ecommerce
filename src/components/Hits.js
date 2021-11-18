@@ -1,5 +1,6 @@
 import React from 'preact/compat';
 import { connectHits } from 'react-instantsearch-dom';
+import { Link } from "react-router-dom";
 
 import { useAppContext } from '../hooks';
 import { Pagination } from './Pagination';
@@ -24,7 +25,9 @@ export const Hits = connectHits((props) => {
       >
         {props.hits.map((hit) => (
           <li key={hit.objectID} className="ais-Hits-item uni-Hits-item">
-            <ConnectedHit hit={hit} />
+            <Link to='/hitdetails' onClick={() => props.setHit(hit)}>
+              <ConnectedHit hit={hit} />
+            </Link>
           </li>
         ))}
       </ol>

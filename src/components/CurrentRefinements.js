@@ -78,8 +78,12 @@ function getRefinement(refinement, config) {
   }
 }
 
-export const CurrentRefinements = connectCurrentRefinements(
-  function CurrentRefinements({ items, refine }) {
+export const CurrentRefinements = connectCurrentRefinements(function CurrentRefinements(props) {
+  const {
+    priceFilterType,
+    items, 
+    refine
+  } = props;
     const { config, setSearchContext } = useAppContext();
 
     const refinements = items.reduce((acc, current) => {

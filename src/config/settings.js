@@ -43,7 +43,7 @@ export const index = {
   searchParameters: {
     analytics: true,
     clickAnalytics: true,
-    hitsPerPage: 20,
+    hitsPerPage: 5,
     attributesToSnippet: ['description:25'],
   },
 };
@@ -145,6 +145,14 @@ export const refinements = [
       ),
     },
   },
+  {
+    type: 'rating',
+    header: 'Rating',
+    label: 'Rating',
+    options: {
+      attribute: 'rating',      
+    },
+  },
 ];
 
 /*
@@ -164,7 +172,7 @@ export const refinements = [
 */
 
 export const suggestionsIndex = {
-  indexName: 'dev_ananas',
+  indexName: 'dev_ananas_query_suggestions',
   searchParameters: {
     hitsPerPage: 6,
   },

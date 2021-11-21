@@ -30,7 +30,7 @@ const rules = {
   },
   refinements: {
     validate(input) {
-      const acceptedTypes = ['hierarchical', 'category', 'list', 'slider'];
+      const acceptedTypes = ['hierarchical', 'category', 'list', 'slider', 'rating'];
       const unknownType = input.find(
         ({ type }) => !acceptedTypes.includes(type)
       );

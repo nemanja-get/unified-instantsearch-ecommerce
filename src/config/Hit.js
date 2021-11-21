@@ -4,7 +4,6 @@ import { Highlight, Snippet } from 'react-instantsearch-dom';
 import './Hit.scss';
 
 export function Hit({ hit, insights, view, hitSetting }) {
-
   let freeShipping;
   
   if (hit.free_shipping) {
@@ -22,7 +21,7 @@ export function Hit({ hit, insights, view, hitSetting }) {
     >
       <a href="#" className="uni-Hit-inner">
         <div className="uni-Hit-wishList">
-          <button type="button" onClick={() => addToWishList(hit)}>
+          <button type="button" className="uni-Hit-wishList-icon" onClick={() => addToWishList(hit)}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path class="stroke" fill-rule="evenodd" clip-rule="evenodd" d="M1.91441 8.39872C1.19908 6.16539 2.03508 3.61272 4.37975 2.85739C5.61308 2.45939 6.97441 2.69405 7.99975 3.46539C8.96975 2.71539 10.3811 2.46205 11.6131 2.85739C13.9577 3.61272 14.7991 6.16539 14.0844 8.39872C12.9711 11.9387 7.99975 14.6654 7.99975 14.6654C7.99975 14.6654 3.06508 11.9801 1.91441 8.39872Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path class="line" d="M10.6665 5.1333C11.3798 5.36397 11.8838 6.00063 11.9445 6.74797" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </button>
         </div>
@@ -52,6 +51,7 @@ export function Hit({ hit, insights, view, hitSetting }) {
               <p className="uni-Hit-free-shipping">{freeShipping}</p>
               <span className="uni-Hit-currency">$</span>
               <span className="uni-Hit-price">{hit.price.toLocaleString()}</span>
+              <div style="font-size: 20px; display: inline-block;margin-left:120px">Rating: {hit.rating}</div>
           </footer>
         </div>
 

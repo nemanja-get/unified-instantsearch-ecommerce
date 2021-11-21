@@ -18,11 +18,14 @@ import { SeeResultsButton } from './SeeResultsButton';
 import { ResetButton } from './ResetButton';
 import  HitDetails from './HitDetails';
 
+
+
 export function Search(props) {
   const { config, view, searchParameters, isMobile } = useAppContext();
   const { isSearchStalled } = useSearchContext();
   const [ isAutoCompleteOn, changeSearchAutoComplete] = useState(true);
   const [ priceFilter, setPriceFilter ] = useState('slider');
+  const [ ratingFilter, setRatingFilter ] = useState('exactRating');
   const [ currentHit, setCurrentHit ] = useState();
 
   const filtersAnchor = React.useRef();
@@ -55,15 +58,9 @@ export function Search(props) {
 
   const [productNumber, setProductNumber] = useState(searchParameters.hitsPerPage);
 
-  // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-  //   setProductNumber(20);
-  // }
-  // else {
-  //   setProductNumber(50);
-  // }
+  
 
   function setHitHandler(el){
-    console.log('kabum',el)
     setCurrentHit(el);
   }
 
@@ -95,101 +92,104 @@ export function Search(props) {
           <Switch>
             <Route exact path="/">
               <div className="uni-Content">
-                      {hasRefinements && (
-                        <>
-                          <div
+           
+                {hasRefinements && (
+                  <>
+                    <div
+                      data-layout="mobile"
+                      className="uni-LeftPanel-Overlay"
+                      onClick={() => props.setIsFiltering(false)}
+                    />
+                    <div className="uni-LeftPanel">
+                      <div className="uni-Refinements">
+                        <div
+                          className="uni-Refinements-scrollable"
+                          ref={filtersAnchor}
+                        >
+                          <header
+                            className="uni-Refinements-heading"
                             data-layout="mobile"
-                            className="uni-LeftPanel-Overlay"
-                            onClick={() => props.setIsFiltering(false)}
+                          >
+                            <span>Filters</span>
+                            <button
+                              onClick={() => {
+                                props.setIsFiltering(false);
+                              }}
+                              className="uni-Refinements-closeButton"
+                              title="Close filters"
+                            >
+                              <CloseIcon />
+                            </button>
+                          </header>
+                          {isMobile && <CurrentRefinements />}
+                          <ClearRefinements />
+
+                          <Refinements priceFilterType={priceFilter} ratingFilterType={ratingFilter} />
+                        </div>
+
+                        <footer
+                          className="uni-Refinements-footer"
+                          data-layout="mobile"
+                        >
+                          <ResetButton
+                            onClick={() => {
+                              props.setIsFiltering(false);
+                            }}
                           />
-                          <div className="uni-LeftPanel">
-                            <div className="uni-Refinements">
-                              <div
-                                className="uni-Refinements-scrollable"
-                                ref={filtersAnchor}
-                              >
-                                <header
-                                  className="uni-Refinements-heading"
-                                  data-layout="mobile"
-                                >
-                                  <span>Filters</span>
-                                  <button
-                                    onClick={() => {
-                                      props.setIsFiltering(false);
-                                    }}
-                                    className="uni-Refinements-closeButton"
-                                    title="Close filters"
-                                  >
-                                    <CloseIcon />
-                                  </button>
-                                </header>
-                                {isMobile && <CurrentRefinements />}
-                                <ClearRefinements />
+                          <SeeResultsButton
+                            onClick={() => {
+                              props.setIsFiltering(false);
+                            }}
+                          />
+                        </footer>
+                      </div>
+                    </div>
+                  </>
+                )}
 
-                                <Refinements priceFilterType={priceFilter} />
-                              </div>
-
-                              <footer
-                                className="uni-Refinements-footer"
-                                data-layout="mobile"
-                              >
-                                <ResetButton
-                                  onClick={() => {
-                                    props.setIsFiltering(false);
-                                  }}
-                                />
-                                <SeeResultsButton
-                                  onClick={() => {
-                                    props.setIsFiltering(false);
-                                  }}
-                                />
-                              </footer>
-                            </div>
-                          </div>
-                        </>
-                      )}
-
-                      <div className="uni-RightPanel">
-                        <header className="uni-BodyHeader">
-                          <div className="uni-BodyHeader-heading">
-                            <div className="uni-BodyHeader-stats">
-                              {searchQuery}
-                              <Stats />
-                            </div>
-
-                            <div className="uni-BodyHeader-extraOptions">
-                              {sorts.length > 1 && (
-                                <div className="uni-BodyHeader-sortBy">
-                                  <span className="uni-Label">Sortiraj po</span>
-                                  <SortBy
-                                    items={sorts}
-                                    defaultRefinement={sorts[0].value}
-                                  />
-                                </div>
-                              )}
-
-                              <div>
-                                <Views view={view} setView={props.setView} />
-                              </div>
-                            </div>
-                          </div>
-                          {!isMobile && <CurrentRefinements priceFilterType={priceFilter}/>}
-                        </header>
-
-                        <main className="uni-BodyContent">
-                          <Banner />
-                          <NoResultsHandler>
-                            <ProductList setHit={setHitHandler} />
-                          </NoResultsHandler>
-                        </main>
+                <div className="uni-RightPanel">
+                  <header className="uni-BodyHeader">
+                    <div className="uni-BodyHeader-heading">
+                      <div className="uni-BodyHeader-stats">
+                        {searchQuery}
+                        <Stats />
                       </div>
 
-                    
-                      {hasRefinements && ( <FiltersButton onClick={() => {props.setIsFiltering(true);}}/>)}
+                      <div className="uni-BodyHeader-extraOptions">
+                        {sorts.length > 1 && (
+                          <div className="uni-BodyHeader-sortBy">
+                            <span className="uni-Label">Sortiraj po</span>
+                            <SortBy
+                              items={sorts}
+                              defaultRefinement={sorts[0].value}
+                            />
+                          </div>
+                        )}
+
+                        <div>
+                          <Views view={view} setView={props.setView} />
+                        </div>
+                      </div>
+                    </div>
+                    {!isMobile && <CurrentRefinements priceFilterType={priceFilter} ratingFilterType={ratingFilter}/>}
+                  </header>
+
+                  <main className="uni-BodyContent">
+                    <Banner />
+                    <NoResultsHandler>
+                      <ProductList setHit={setHitHandler} />
+                    </NoResultsHandler>                                           
+                  </main>
+                </div>
+
+              
+                {hasRefinements && ( <FiltersButton onClick={() => {props.setIsFiltering(true);}}/>)}
               </div>
             </Route>
-            <Route path="/hitdetails">
-              <HitDetails selectedHit={currentHit}/>
+            <Route path="/hitdetails">            
+              <div className="uni-Content">
+                <HitDetails selectedHit={currentHit}/>                              
+              </div>
             </Route>
           </Switch>
 
@@ -207,10 +207,15 @@ export function Search(props) {
           </div>
 
           <div>
-          <p style="margin-bottom: 0.5rem">Choose price filter</p>
+            <p style="margin-bottom: 0.5rem">Choose price filter</p>
             <button onClick={() => setPriceFilter('slider')}>Slider</button>
             <button onClick={() => setPriceFilter('range')}>Range input</button>
             <button onClick={() => setPriceFilter('numericMenu')}>Numeric menu</button>
+          </div>
+          <div>
+          <p style="margin-bottom: 0.5rem">Choose rating filter</p>
+            <button onClick={() => setRatingFilter('exactRating')}>Exact rating</button>
+            <button onClick={() => setRatingFilter('selectedAndUp')}>Selected rating and up</button>
           </div>
         </footer>
       </div>

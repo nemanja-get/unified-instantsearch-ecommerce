@@ -3,6 +3,7 @@ import {
   RefinementList,
   HierarchicalMenu,
   Menu,
+  RatingMenu
 } from 'react-instantsearch-dom';
 
 import { useAppContext } from '../hooks';
@@ -13,8 +14,10 @@ import { SizeList } from './SizeList';
 import { ImageList } from './ImageList';
 import { CustomRangeInput } from './RangeInput';
 import { CustomNumericMenu } from './NumericMenu';
+import { CustomRatings } from './Ratings';
 
 function RefinementWidget({ type, label, ...props  }) {
+
   switch (type) {
     case 'color':
       return <ColorList {...props} />;
@@ -22,15 +25,23 @@ function RefinementWidget({ type, label, ...props  }) {
     case 'size':
       return <SizeList {...props} />;
 
+    case 'rating':
+      if (props.ratingFilterType === 'exactRating') {
+        return <CustomRatings attribute="rating" />;
+      } 
+      else if (props.ratingFilterType === 'selectedAndUp') {
+        return <RatingMenu attribute="rating" />;
+      }
+       
     case 'slider':
       if (props.priceFilterType === 'slider'){
-        return <Slider {...props} />
+        return <Slider {...props} />;
       }
       else if (props.priceFilterType === 'range') {
         return <CustomRangeInput {...props} />;
       }
       else if (props.priceFilterType === 'numericMenu'){
-        return <CustomNumericMenu {...props} />
+        return <CustomNumericMenu {...props} />;
       }     
 
     case 'list':
@@ -42,7 +53,7 @@ function RefinementWidget({ type, label, ...props  }) {
               expanded ? 'Prikaži manje' : 'Prikaži više',
           }}
           {...props}
-          />
+        />
         );
       }
       else if(label === 'ImageBrand'){
@@ -125,7 +136,7 @@ export function Refinements(props) {
         isOpened={panels[panelId]}
         onToggle={() => onToggle(panelId)}
       >
-        <RefinementWidget type={refinement.type} {...refinement.options} label={refinement.label} priceFilterType={props.priceFilterType} />
+        <RefinementWidget type={refinement.type} {...refinement.options} label={refinement.label} priceFilterType={props.priceFilterType} ratingFilterType={props.ratingFilterType} />
       </Panel>
     );
   });

@@ -11,6 +11,8 @@ function getRefinement(refinement, config) {
       : x.options.attribute === refinement.attribute
   );
 
+
+
   switch (refinementConfig.type) {
     case 'category': {
       return [
@@ -42,7 +44,10 @@ function getRefinement(refinement, config) {
     case 'slider': {
       let label = '';
 
-      if (
+      if(!refinement.currentRefinement.min && !refinement.currentRefinement.max) {
+        label = refinement.currentRefinement;
+      }
+      else if (
         refinement.currentRefinement.min &&
         refinement.currentRefinement.max
       ) {
@@ -71,6 +76,17 @@ function getRefinement(refinement, config) {
         },
       ];
     }
+
+    case 'rating': {
+      return [
+        {
+          category: refinementConfig.label,
+          label: refinement.currentRefinement.min,
+          value: refinement.value,
+        },
+      ];
+    }
+
 
     default: {
       return null;

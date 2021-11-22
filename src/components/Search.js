@@ -1,5 +1,5 @@
 import React, {useState} from 'preact/compat';
-import { InstantSearch, Configure, SortBy, ClearRefinements  } from 'react-instantsearch-dom';
+import { InstantSearch, Configure, SortBy, ClearRefinements } from 'react-instantsearch-dom';
 import { BrowserRouter as Router, Route, Switch, Link  } from 'react-router-dom';
 
 import { useAppContext, useSearchContext } from '../hooks';
@@ -124,7 +124,7 @@ export function Search(props) {
                           {isMobile && <CurrentRefinements />}
                           <ClearRefinements />
 
-                          <Refinements priceFilterType={priceFilter} ratingFilterType={ratingFilter} />
+                          <Refinements priceFilterType={priceFilter} ratingFilterType={ratingFilter} />                          
                         </div>
 
                         <footer
@@ -206,7 +206,7 @@ export function Search(props) {
             <button onClick={() => setProductNumber(100)}>100</button>            
           </div>
 
-          <div>
+          <div style="margin: 0 2rem">
             <p style="margin-bottom: 0.5rem">Choose price filter</p>
             <button onClick={() => setPriceFilter('slider')}>Slider</button>
             <button onClick={() => setPriceFilter('range')}>Range input</button>

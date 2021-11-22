@@ -153,6 +153,14 @@ export const refinements = [
       attribute: 'rating',      
     },
   },
+  {
+    type: 'toggle',
+    header: 'Free Shipping',
+    label: 'Free Shipping',
+    options: {
+      attribute: 'free_shipping',      
+    },
+  },
 ];
 
 /*

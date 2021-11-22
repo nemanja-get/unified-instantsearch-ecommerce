@@ -3,7 +3,8 @@ import {
   RefinementList,
   HierarchicalMenu,
   Menu,
-  RatingMenu
+  RatingMenu,
+  ToggleRefinement
 } from 'react-instantsearch-dom';
 
 import { useAppContext } from '../hooks';
@@ -16,6 +17,7 @@ import { CustomRangeInput } from './RangeInput';
 import { CustomNumericMenu } from './NumericMenu';
 import { CustomRatings } from './Ratings';
 
+
 function RefinementWidget({ type, label, ...props  }) {
 
   switch (type) {
@@ -24,6 +26,14 @@ function RefinementWidget({ type, label, ...props  }) {
 
     case 'size':
       return <SizeList {...props} />;
+
+    case 'toggle':
+      return ( <ToggleRefinement
+                attribute={props.attribute}
+                label={label}
+                value={true}
+              />
+      )
 
     case 'rating':
       if (props.ratingFilterType === 'exactRating') {

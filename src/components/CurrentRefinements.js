@@ -86,7 +86,16 @@ function getRefinement(refinement, config) {
         },
       ];
     }
-
+    
+    case 'toggle': {
+      return [
+        {
+          category: refinementConfig.label,
+          label: refinement.currentRefinement,
+          value: refinement.value,
+        },
+      ];
+    }
 
     default: {
       return null;

@@ -38,6 +38,7 @@ export function App({ config }) {
     snippetEllipsisText: '…',
     ...config.index.searchParameters,
   };
+
   const ConnectedHit = React.useMemo(
     () =>
       connectHitInsights(aa)((props) => (
@@ -205,6 +206,7 @@ export function App({ config }) {
                 .join(' ')}
               ref={topAnchor}
             >
+
               <SearchContext.Provider value={searchContext}>
                 <Search
                   searchClient={searchClient}
@@ -216,6 +218,7 @@ export function App({ config }) {
                   setView={setView}
                   isFiltering={isFiltering}
                   setIsFiltering={setIsFiltering}
+                  config={config}
                 />
               </SearchContext.Provider>
             </div>

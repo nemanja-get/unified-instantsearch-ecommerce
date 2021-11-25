@@ -1,6 +1,8 @@
 import React from 'preact/compat';
 import { ExperimentalConfigureRelatedItems, connectPagination, Configure } from 'react-instantsearch-dom';
 import { Hits } from './Hits';
+import { useSearchClient, useInsights, useMatchMedia } from '../hooks';
+
 import './HitDetails.scss';
 
 const HitDetails = (props) => {
@@ -17,8 +19,12 @@ const HitDetails = (props) => {
   rating
   } = props.selectedHit;
 
+  const { aa, userToken } = useInsights(
+    props.config.appId,
+    props.config.searchApiKey,
+    props.config.setUserToken
+  );
 
-let Hit;
 
   let freeShipping;
   free_shipping ? freeShipping = <span>Besplatno</span> : freeShipping = <span>Dostava se naplacuje</span>;
@@ -27,27 +33,22 @@ let Hit;
     console.log(element);
   }
 
+  function addToCart(element) {
+    aa('convertedObjectIDsAfterSearch', {
+      indexName: 'dev_ananas',
+      eventName: 'Added to Cart',
+      userToken: 'user-1',
+      objectIDs: element.selectedHit.objectID,
+      queryID: element.selectedHit.__queryID
+    })
+  }
+
   const hitRelated = {
     objectID: objectID,
     name: name,
     brand: brand,
     categories: categories,
   };
-
-
-  function RelatedHit({ Hit }) {
-    return (
-      <div>
-        <div className="ais-RelatedHits-item-image">
-          <img src={hit.image} alt={hit.name} />
-        </div>
-  
-        <div className="ais-RelatedHits-item-title">
-          <h4>{hit.name}</h4>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div>
@@ -63,7 +64,7 @@ let Hit;
             <button type="button" className="uni-Hit-wishList-icon" onClick={() => addToWishList(name)}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path class="stroke" fill-rule="evenodd" clip-rule="evenodd" d="M1.91441 8.39872C1.19908 6.16539 2.03508 3.61272 4.37975 2.85739C5.61308 2.45939 6.97441 2.69405 7.99975 3.46539C8.96975 2.71539 10.3811 2.46205 11.6131 2.85739C13.9577 3.61272 14.7991 6.16539 14.0844 8.39872C12.9711 11.9387 7.99975 14.6654 7.99975 14.6654C7.99975 14.6654 3.06508 11.9801 1.91441 8.39872Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path class="line" d="M10.6665 5.1333C11.3798 5.36397 11.8838 6.00063 11.9445 6.74797" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <button type="button" className="uni-Hit-AddToCart">Dodaj u korpu</button>
+            <button type="button" className="uni-Hit-AddToCart" onClick={() => addToCart(props)}>Dodaj u korpu</button>
           </div>
 
           <div className="hit-details-shipping">
@@ -90,7 +91,7 @@ let Hit;
       />
 
       <Configure hitsPerPage={4} />
-      <Hits hit={RelatedHit} />
+      <Hits />
     </div>
   )
 };

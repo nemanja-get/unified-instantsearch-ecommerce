@@ -80,6 +80,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
+  padding: 16px 0;
   .ais-SearchBox-completion {
     align-items: center;
     color: #777;
@@ -798,7 +799,7 @@
 }
 
 .uni-Hit-footer {
-  height: 50px;
+  height: 80px;
 }
 
 .uni-Hit-wishList-icon {
@@ -827,4 +828,15 @@
   svg {
     fill: transparent;
   }
+}
+
+.suggestion-categorie {
+  font-size: 10px;
+  color:#fe5000;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.aa-Panel {
+  z-index: 4000;
 }

@@ -4,6 +4,7 @@ import { Index, connectHits, Configure } from 'react-instantsearch-dom';
 import { QUERY_SUGGESTIONS_INDEX_NAME } from '../../constants';
 import { ReverseHighlight } from '../ReverseHighlight';
 import { SearchBox } from 'react-instantsearch-dom';
+import { getUrlFromState, getStateFromUrl, createURL } from '../../router';
 
 export const PredictiveSearchBox = (props) => {
   const [suggestion, setSuggestion] = React.useState(null);
@@ -20,13 +21,9 @@ export const PredictiveSearchBox = (props) => {
             : null
         }
         //  onChange={(event) => {
-				// 	// if(!event.currentTarget.value){
-				// 	// 	setSuggestion(null);
-				// 	// 	props.refine('');
-				// 	// }
-        //    console.log(!event.currentTarget.value)
         //    setSuggestion(null);
         //    props.refine(event.currentTarget.value);
+        //    console.log('onChange: ', props)
         // }}
         onKeyDown={(event) => {
           // When the user hits the right arrow and is at the end of the
@@ -75,6 +72,7 @@ const Suggestions = connectHits(function Suggestions({
   onSuggestion,
   onClick,
 }) {
+ 
   const firstSuggestion = hits[0]?.query;
 
   React.useEffect(() => {
@@ -111,14 +109,22 @@ const Suggestions = connectHits(function Suggestions({
       {hits.length > 0 && (
         <ol className="uni-QuerySuggestions-list">
           {hits.map((hit) => {
+            const categorie = hit.dev_ananas.facets.exact_matches.categories;
+            let categories = [];
+            categorie.map((item) => {
+              let link = "?hierarchicalMenu%5Bcategories%5D="+item.value;
+              categories.push(<a className="suggestion-categorie" onClick={() => onClick(item.value)} href={link}>({item.value})</a>)             
+            })
+
             return (
-              <li key={hit.objectID} className="uni-QuerySuggestions-item">
+              <li key={hit.objectID} className="uni-QuerySuggestions-item">   
                 <button
                   className="uni-QuerySuggestions-button"
                   onClick={() => onClick(hit.query)}
                 >
                   <ReverseHighlight hit={hit} attribute="query" />
                 </button>
+                {/* {categories} */}
               </li>
             );
           })}

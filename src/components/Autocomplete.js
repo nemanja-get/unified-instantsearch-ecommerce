@@ -13,47 +13,112 @@ const searchClient = algoliasearch(appId, apiKey);
 
 export function Autocomplete(props) {
 
+
+  function searchQuery(e, query){
+    e.stopPropagation();
+    props.onSearchStateChange({
+      query: query,
+    })
+  }
+
+  function searchCategory(e, query, categorieValue){
+    e.stopPropagation();
+    props.onSearchStateChange({
+      query: query,
+      hierarchicalMenu: { categories: categorieValue}
+    })
+  }
+
+  function searchBrand(e, query, brandValue){
+    e.stopPropagation();
+    props.onSearchStateChange({
+      query: query,
+      refinementList: { brand: brandValue}
+    })
+  }
+
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
     indexName: 'dev_ananas_query_suggestions',
     getSearchParams({ state }) {
       return { hitsPerPage: 10 };
     },
-    categoryAttribute: [
-      'dev_ananas',
-      'facets',
-      'exact_matches',
-      'categories',
-    ],
-    itemsWithCategories: 2,
-    categoriesPerItem: 3,
-    brandAttribute: [
-      'dev_ananas',
-      'facets',
-      'exact_matches',
-      'brands',
-    ],
-    itemsWithBrands: 2,
-    brandsPerItem: 3,
+    // categoryAttribute: [
+    //   'dev_ananas',
+    //   'facets',
+    //   'exact_matches',
+    //   'categories',
+    // ],
+     itemsWithCategories: 5,
+     categoriesPerItem: 5,
     transformSource({ source }) {
       return {
         ...source,
-        onSelect({ item }) {
-          console.log('onSelect', item)
-          // Assuming the `setSearchState` function updates the search page state.
-          props.onSearchStateChange({
-            query: item.query,
-            category: item.__autocomplete_qsCategory,
-          });
+        templates: {
+        ...source.templates,
+        item(params) {
+          const { item } = params;          
+          let currentQuery = item.query;
+
+          const categoriesColumn = item.dev_ananas.facets.exact_matches.categories.map( item => {
+            return (
+            <li key={item.objectID} style="padding-bottom: 4px" onClick={(e) => searchCategory(e, currentQuery, item.value)}>
+             {source.templates.item(params)} in {item.value}
+            </li>
+            )
+          })
+          const brandColumn = item.dev_ananas.facets.exact_matches.brand.map( item => {
+            return (
+            <li key={item.objectID} style="padding-bottom: 4px" onClick={(e) => searchBrand(e, currentQuery, item.value)}>
+             {source.templates.item(params)} in {item.value}
+            </li>
+            )
+          })
+
+         return  (
+          <div style="display: flex;">
+            <div style="width: 30%" onClick={(e) => searchQuery(e, item.query)} >
+              {source.templates.item(params)}
+            </div>
+            <div class="option" style="width: 30%; margin-right: 5%">
+             <span>{categoriesColumn}</span>
+            </div>    
+            <div class="option" style="width: 30%">
+             <span>{brandColumn}</span>
+            </div>     
+          </div>
+         )
         },
-        onStateChange(){
-          console.log('promena')
-        }
+        noResults() {
+          return 'No products for this query.';
+        },
+      },
       };
     },
   });
 
+
   const containerRef = useRef(null);
+
+  function uniqBy(predicate) {
+    return function runUniqBy(...rawSources) {
+      const sources = rawSources.flat().filter(Boolean);
+  
+      return sources.map(source => {
+        const items = source.getItems();
+        return {
+          ...source,
+          getItems() {
+            return items;
+          },
+        };
+      });
+    };
+  }
+
+  const removeDuplicates = uniqBy(({ source, item }) =>
+  source.sourceId === 'querySuggestionsPlugin' ? item.query : item.label
+);
 
 
   useEffect(() => {
@@ -65,43 +130,70 @@ export function Autocomplete(props) {
       container: containerRef.current,
       renderer: { createElement, Fragment },
       plugins: [querySuggestionsPlugin],
-      // render({ children }, root) {
-      //   render(children, root);
-      // },
-      // getSources: ({query}) => [
-      //   {
-      //     sourceId: 'actions',
-      //     templates: {
-      //       item({ item, components }) {
-      //       return <AutocompleteTemplate hit={item} components={components} setHit={props.setHit} />
-      //       },
-      //       noResults() {
-      //         return 'No products for this query.';
-      //       },
-      //     },
+      
+      render({ children }, root) {
+        render(children, root);
+      },
+      getSources: ({query}) => [
+        {
+          sourceId: 'product',
+          templates: {
+            // header(items) {
+            //   const listItems =  items.items.map((item) => 
+            //     <li key={item.objectID} style="margin-bottom: 8px; display: flex">                 
+            //       <div style="margin: 4px">
+            //         {
+            //           item.categories.map((categorie) => {
+            //             return <p style="padding-left: 8px; cursor: pointer;padding-top: 4px;padding-bottom:4px" key={categorie[0]}
+            //               onClick={() => props.onSearchStateChange({
+            //                 query: query,
+            //                 hierarchicalMenu: { categories: categorie}
+            //               })
+            //             }
+            //             >{query} in {categorie}</p>
+            //           })
+            //         }
+            //       </div>
 
-      //     getItems() {
-      //       return getAlgoliaResults({
-      //         searchClient,
-      //         queries: [
-      //           {
-      //             indexName: 'dev_ananas',
-      //             query,
-      //           },
-      //         ],
-      //         // onSelect(params){
-      //         //   console.log('params', params)
-      //         // }
-      //       });
-      //     },
+            //       <div style="margin: 4px">
+            //           <p style="padding-left: 8px; cursor: pointer;padding-top: 4px;padding-bottom:4px"
+            //             onClick={() => props.onSearchStateChange({
+            //               refineamnjaentList: { brand: item.brand}
+            //             })
+            //           }
+            //           >{query} in {item.brand}</p>
+            //       </div>
+            //     </li>
+            
+            //   );
 
-// //           onSelect(params){
-// //             const {item, setQuery} = params;
-// //             item.onSelect(params);
-// //             setQuery("");
-// //           }
-      //   }
-      // ],
+            //   return (
+            //     <ul>{listItems}</ul>
+            //   );
+       
+            // },
+            item({ item, components }) {
+            //return <div className='klj'></div>
+            },
+            noResults() {
+              return 'No products for this query.';
+            },
+          },
+
+          getItems() {
+            return getAlgoliaResults({
+              searchClient,
+              queries: [
+                {
+                  indexName: 'dev_ananas',
+                  query,
+                },
+              ],
+
+            });
+          },
+        }
+      ],
       ...props,
     })
 

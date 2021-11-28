@@ -840,3 +840,27 @@
 .aa-Panel {
   z-index: 4000;
 }
+
+.aa-Item[aria-selected="true"] {
+  background-color: transparent;
+}
+
+.aaItem[aria-selected="true"] .aa-ItemWrapper {
+  background-color: red;
+}
+
+.aaItem[aria-selected="true"] .option {
+  background-color: rgba(179,173,214,.205);
+}
+
+.aa-Panel .aa-ItemActions {
+  display: none;
+}
+
+.aa-Panel .aa-ItemIcon {
+  display: none;
+}
+
+.aa-Source[data-autocomplete-source-id="product"] {
+  display: none;
+}

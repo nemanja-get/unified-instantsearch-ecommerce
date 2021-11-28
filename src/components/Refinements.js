@@ -40,7 +40,7 @@ function RefinementWidget({ type, label, ...props  }) {
         return <CustomRatings attribute="rating" />;
       } 
       else if (props.ratingFilterType === 'selectedAndUp') {
-        return <RatingMenu attribute="rating" />;
+        return <RatingMenu attribute="rating" min={1} max={5} />;
       }
        
     case 'slider':

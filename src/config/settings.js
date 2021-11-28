@@ -43,8 +43,10 @@ export const index = {
   searchParameters: {
     analytics: true,
     clickAnalytics: true,
-    hitsPerPage: 5,
+    hitsPerPage: 8,
     attributesToSnippet: ['description:25'],
+      //enablePersonalization: true,
+
   },
 };
 
@@ -63,7 +65,7 @@ export const index = {
 
 export const googleAnalytics = false;
 export const setUserToken = (setToken) => {
-  setToken(/* The current user's `userToken` */);
+  setToken();
 };
 
 /*
@@ -155,10 +157,10 @@ export const refinements = [
   },
   {
     type: 'toggle',
-    header: 'Free Shipping',
-    label: 'Free Shipping',
+    header: 'Na stanju',
+    label: 'Na stanju',
     options: {
-      attribute: 'free_shipping',      
+      attribute: 'in_stock',      
     },
   },
 ];

@@ -13,7 +13,6 @@ const searchClient = algoliasearch(appId, apiKey);
 
 export function Autocomplete(props) {
 
-
   function searchQuery(e, query){
     e.stopPropagation();
     props.onSearchStateChange({
@@ -25,7 +24,7 @@ export function Autocomplete(props) {
     e.stopPropagation();
     props.onSearchStateChange({
       query: query,
-      hierarchicalMenu: { categories: categorieValue}
+      hierarchicalMenu: { categoriesLevel1: categorieValue}
     })
   }
 
@@ -39,7 +38,7 @@ export function Autocomplete(props) {
 
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
-    indexName: 'dev_ananas_query_suggestions',
+    indexName: 'poc_ananas_query_suggestions',
     getSearchParams({ state }) {
       return { hitsPerPage: 10 };
     },
@@ -60,14 +59,14 @@ export function Autocomplete(props) {
           const { item } = params;          
           let currentQuery = item.query;
 
-          const categoriesColumn = item.dev_ananas.facets.exact_matches.categories.map( item => {
+          const categoriesColumn = item.poc_ananas.facets.exact_matches.categoriesLevel1.map( item => {
             return (
             <li key={item.objectID} style="padding-bottom: 4px" onClick={(e) => searchCategory(e, currentQuery, item.value)}>
              {source.templates.item(params)} in {item.value}
             </li>
             )
           })
-          const brandColumn = item.dev_ananas.facets.exact_matches.brand.map( item => {
+          const brandColumn = item.poc_ananas.facets.exact_matches.brand.map( item => {
             return (
             <li key={item.objectID} style="padding-bottom: 4px" onClick={(e) => searchBrand(e, currentQuery, item.value)}>
              {source.templates.item(params)} in {item.value}
@@ -185,7 +184,7 @@ export function Autocomplete(props) {
               searchClient,
               queries: [
                 {
-                  indexName: 'dev_ananas',
+                  indexName: 'poc_ananas',
                   query,
                 },
               ],

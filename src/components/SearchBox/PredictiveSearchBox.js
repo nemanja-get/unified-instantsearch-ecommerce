@@ -109,7 +109,7 @@ const Suggestions = connectHits(function Suggestions({
       {hits.length > 0 && (
         <ol className="uni-QuerySuggestions-list">
           {hits.map((hit) => {
-            const categorie = hit.dev_ananas.facets.exact_matches.categories;
+            const categorie = hit.poc_ananas.facets.exact_matches.categoriesLevel1;
             let categories = [];
             categorie.map((item) => {
               let link = "?hierarchicalMenu%5Bcategories%5D="+item.value;

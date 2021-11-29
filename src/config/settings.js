@@ -39,7 +39,7 @@ export const hitComponent = Hit;
 
 
 export const index = {
-  indexName: 'dev_ananas',
+  indexName: 'poc_ananas',
   searchParameters: {
     analytics: true,
     clickAnalytics: true,
@@ -84,11 +84,11 @@ export const setUserToken = (setToken) => {
 export const sorts = [
   {
     label: 'Price ascending',
-    value: 'dev_ananas_price_asc',
+    value: 'poc_ananas_price_asc',
   },
   {
     label: 'Price descending',
-    value: 'dev_ananas_price_desc',
+    value: 'poc_ananas_price_desc',
   }
 ];
 
@@ -112,7 +112,7 @@ export const refinements = [
     header: 'Categories',
     label: 'Category',
     options: {
-      attributes: ['categories'],
+      attributes: ['categoriesLevel1', 'categoriesLevel2', 'categoriesLevel3'],
       limit: 6,
       showMore: true,
     },
@@ -182,7 +182,7 @@ export const refinements = [
 */
 
 export const suggestionsIndex = {
-  indexName: 'dev_ananas_query_suggestions',
+  indexName: 'poc_ananas_query_suggestions',
   searchParameters: {
     hitsPerPage: 6,
   },

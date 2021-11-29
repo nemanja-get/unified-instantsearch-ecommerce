@@ -12,7 +12,8 @@ const HitDetails = (props) => {
   categories,
   description,
   free_shipping,
-  image,
+  image_url,
+  hover_image,
   name,
   popularity,
   price,
@@ -33,15 +34,15 @@ const HitDetails = (props) => {
     console.log(element);
   }
 
-  function addToCart(element) {
-    aa('convertedObjectIDsAfterSearch', {
-      indexName: 'dev_ananas',
-      eventName: 'Added to Cart',
-      userToken: 'user-1',
-      objectIDs: element.selectedHit.objectID,
-      queryID: element.selectedHit.__queryID
-    })
-  }
+  // function addToCart(element) {
+  //   aa('convertedObjectIDsAfterSearch', {
+  //     indexName: 'dev_ananas',
+  //     eventName: 'Added to Cart',
+  //     userToken: 'user-1',
+  //     objectIDs: element.selectedHit.objectID,
+  //     queryID: element.selectedHit.__queryID
+  //   })
+  // }
 
   const hitRelated = {
     objectID: objectID,
@@ -54,7 +55,9 @@ const HitDetails = (props) => {
     <div>
       <div className="hit-details-wrapper">
         <div className="hit-details-image">
-          <img src={image} alt={name} />
+          <img src={'https://static.ananas.rs' + image_url} alt={name} 
+              onMouseOver={e => (e.target.src = 'https://static.ananas.rs' + hover_image)}
+              onMouseOut={e => (e.target.src = 'https://static.ananas.rs' + image_url)}/>
         </div>
         <div className="hit-details-info">
           <h1>{name}</h1>

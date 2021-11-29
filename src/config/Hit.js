@@ -39,7 +39,7 @@ export function Hit({ hit, insights, view, hitSetting }) {
 
         <div className="uni-Hit-Body">
           <header className="uni-Hit-header">
-            <h2 className="uni-Hit-category">{hit.categories[0]}</h2>
+            <h2 className="uni-Hit-category">{hit.categoriesLevel1}</h2>
 
             <p className="uni-Hit-title">
               <Highlight attribute="name" tagName="mark" hit={hit} />
